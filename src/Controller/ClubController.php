@@ -5,9 +5,14 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ClubRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Club;
+
 
 class ClubController extends AbstractController
 {
+
     #[Route('/club', name: 'app_club')]
     public function index(): Response
     {
@@ -15,7 +20,6 @@ class ClubController extends AbstractController
             'controller_name' => 'ClubController',
         ]);
     }
-
 
     #[Route ('/club/get/{nom}',name:'app_club_getName')]
     public function getName($nom):Response{
@@ -47,5 +51,51 @@ class ClubController extends AbstractController
         
         ]);
     }
+
+    #[Route('/club/all', name: 'app_club_all')]
+    public function getClubs( ClubRepository $repo) :Response
+    {
+        $clubs = $repo->findAll();
+        return $this->render('club/clubs.html.twig', [
+            'clubs' => $clubs,
+        ]);
+    }
+
+
+    #[Route('/club/{id}', name: 'app_club_get')]
+    public function getClubById( ClubRepository $repo , $id) :Response
+    {
+        $club = $repo->find($id);
+        return $this->render('club/detailsClub.html.twig', [
+            'club' => $club,
+        ]);
+    }
+
+//Methode 1
+
+    // #[Route('/club/remove/{id}', name: 'app_club_club')]
+    // public function removeClub( ManagerRepository $doctrine , $id, ClubRepository $repo) :Response
+    // {
+    //     $em= $doctrine->getManager();
+    //     $club = $repo->find($id);
+    //     $em->remove($club);
+    //     $em->fluch();
+    //     return $this->redirectToRoute('club_get_all');
+    // }
+
+//Methode 2
+    #[Route('/club/remove/{id}', name: 'app_club_remove')]
+    public function removeClub( ManagerRegistry $doctrine , $id) :Response
+    {
+        $em= $doctrine->getManager();
+        $repo= $doctrine->getRepository(Club::class);
+        $club = $repo->find($id);
+        $em->remove($club);
+        $em->flush();
+        return $this->redirectToRoute('club_get_all');
+    }
+
 }
-//
+
+
+
