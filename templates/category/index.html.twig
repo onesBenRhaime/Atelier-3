@@ -1,0 +1,16 @@
+<h1>Liste des Categories</h1>
+<table border ="1">
+<tr>
+<th>ID</th>
+<th>Label</th>
+<th>Actions</th>
+</tr>
+{% for c in categories %}
+    <tr>
+    <td>{{c.id}}</td>
+    <td>{{c.label}}</td>
+    <td>| <a href="{{path('remove_category',{'id':c.id}) }}">remove</a></td>
+    </tr>
+{% endfor %}
+
+</table>

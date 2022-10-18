@@ -1,0 +1,22 @@
+<h1>Liste des Products</h1>
+<a class="btn btn-primary" href="{{path('add_product')}}">Add new Product</a><br><br>
+<table border ="1">
+<tr>
+<th>ID</th>
+<th>Label</th>
+<th>Price</th>
+<th>Quantity</th>
+<th>Actions</th>
+</tr>
+{% for c in products %}
+    <tr>
+    <td>{{c.id}}</td>
+    <td>{{c.label|upper}}</td>
+    <td>{{c.price}}</td>
+    <td>{{c.quantity}}</td>
+    <td>| <a href="{{path('remove_product',{'id':c.id}) }}">remove</a></td>
+    </tr>
+    
+{% endfor %}
+<tr>Nombre Total:{{products|length}}</tr><br><br>
+</table>

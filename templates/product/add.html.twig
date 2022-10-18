@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+<div class="row">
+<div class="col-md-4"></div>
+<div class="col-md-4">
+{{form_start(form)}}
+
+<div class="mb-3">
+{{form_label(form.label,'User Name : ',{'attr':{'class':'form-label'}})}}
+{{form_widget(form.label,{'attr':{'class':'form-control'}})}}
+</div>
+<div class="mb-3">
+{{form_label(form.price,'Price : ',{'attr':{'class':'form-label'}})}}
+{{form_widget(form.price,{'attr':{'class':'form-control'}})}}
+</div>
+<div class="mb-3">
+{{form_label(form.quantity,'Quantity : ',{'attr':{'class':'form-label'}})}}
+{{form_widget(form.quantity,{'attr':{'class':'form-control'}})}}
+</div>
+{ }
+<div class="mb-3">
+{{form_label(form.CategoryId,'Category : ',{'attr':{'class':'form-label'}})}}
+{{form_widget(form.CategoryId,{'attr':{'class':'form-select'}})}}
+</div>
+<div class="mb-3">
+{{form_widget(form.save,{'attr':{'class':'btn btn-primary'}})}}
+</div>
+{{form_end(form)}}
+</div>
+</div>
+</div>
+{% endblock %}
